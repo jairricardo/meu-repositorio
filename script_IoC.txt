@@ -1,0 +1,74 @@
+#!/bin/bash
+
+# Variáveis de ambiente
+DIR_PUBLICO=/var/www/publico
+DIR_ADM=/var/www/adm
+DIR_VEN=/var/www/ven
+DIR_SEC=/var/www/sec
+
+GRP_ADM=adm
+GRP_VEN=ven
+GRP_SEC=sec
+
+USR_CARLOS=carlos
+USR_MARIA=maria
+USR_JOAO=joao_
+USR_DEBORA=debora
+USR_SEBASTIANA=sebastiana
+USR_ROBERTO=roberto
+USR_JOSEFINA=josefina
+USR_AMANDA=amanda
+USR_ROGERIO=rogerio
+
+# Criação dos diretórios
+mkdir $DIR_PUBLICO
+mkdir $DIR_ADM
+mkdir $DIR_VEN
+mkdir $DIR_SEC
+
+# Definição das permissões
+chown root:root $DIR_PUBLICO
+chmod 777 $DIR_PUBLICO
+chown root:$GRP_ADM $DIR_ADM
+chmod 777 $DIR_ADM
+chown root:$GRP_VEN $DIR_VEN
+chmod 777 $DIR_VEN
+chown root:$GRP_SEC $DIR_SEC
+chmod 777 $DIR_SEC
+
+# Criação dos grupos
+groupadd $GRP_ADM
+groupadd $GRP_VEN
+groupadd $GRP_SEC
+
+# Criação dos usuários
+useradd -g $GRP_ADM $USR_CARLOS
+useradd -g $GRP_ADM $USR_MARIA
+useradd -g $GRP_ADM $USR_JOAO
+useradd -g $GRP_VEN $USR_DEBORA
+useradd -g $GRP_VEN $USR_SEBASTIANA
+useradd -g $GRP_VEN $USR_ROBERTO
+useradd -g $GRP_SEC $USR_JOSEFINA
+useradd -g $GRP_SEC $USR_AMANDA
+useradd -g $GRP_SEC $USR_ROGERIO
+
+# Definição das permissões dos usuários nos diretórios
+setfacl -R -m u:$USR_CARLOS:rwx $DIR_ADM
+setfacl -R -m u:$USR_MARIA:rwx $DIR_ADM
+setfacl -R -m u:$USR_JOAO:rwx $DIR_ADM
+setfacl -R -m u:$USR_DEBORA:rwx $DIR_VEN
+setfacl -R -m u:$USR_SEBASTIANA:rwx $DIR_VEN
+setfacl -R -m u:$USR_ROBERTO:rwx $DIR_VEN
+setfacl -R -m u:$USR_JOSEFINA:rwx $DIR_SEC
+setfacl -R -m u:$USR_AMANDA:rwx $DIR_SEC
+setfacl -R -m u:$USR_ROGERIO:rwx $DIR_SEC
+
+# Definição das permissões de outros usuários nos diretórios
+setfacl -R -m o::--- $DIR_ADM
+setfacl -R -m o::--- $DIR_VEN
+setfacl -R -m o::--- $DIR_SEC
+
+# Remoção dos usuários, grupos e diretórios criados anteriormente
+# ...
+
+
